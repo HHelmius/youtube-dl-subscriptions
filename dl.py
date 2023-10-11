@@ -14,15 +14,13 @@ from time import time, mktime, strptime
 from datetime import datetime
 
 if len(glob('last.txt')) == 0:
-    f = open('last.txt', 'w')
-    f.write(str(time()))
-    print('Initialized a last.txt file with current timestamp.')
-    f.close()
+    with open('last.txt', 'w') as f:
+        f.write(str(time()))
+        print('Initialized a last.txt file with current timestamp.')
 
 else:
-    f = open('last.txt', 'r')
-    content = f.read()
-    f.close()
+    with open('last.txt', 'r') as f:
+        content = f.read()
 
 
     ptime = datetime.utcfromtimestamp(float(content))
@@ -56,6 +54,5 @@ else:
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download(videos)
 
-    f = open('last.txt', 'w')
-    f.write(str(ftime))
-    f.close()
+    with open('last.txt', 'w') as f:
+        f.write(str(ftime))
