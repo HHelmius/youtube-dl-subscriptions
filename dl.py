@@ -44,6 +44,9 @@ else:
             if dt > ptime:
                 videos.append(feed['items'][j]['link'])
 
+    with open('last.txt', 'w') as f:
+        f.write(str(ftime))
+
     if len(videos) == 0:
         print('Sorry, no new video found')
     else:
@@ -54,5 +57,3 @@ else:
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download(videos)
 
-    with open('last.txt', 'w') as f:
-        f.write(str(ftime))
