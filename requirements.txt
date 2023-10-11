@@ -1,3 +1,2 @@
-opml
 feedparser
 youtube-dl
