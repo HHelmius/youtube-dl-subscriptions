@@ -18,7 +18,7 @@ Install the requirements
 
     pip install -r requirements.txt
 
-Download your YouTube's subscriptions OPML file by visiting [this URL](https://www.youtube.com/subscription_manager?action_takeout=1). Save the file as `subs.xml` into the cloned repository folder.
+Go to `https://takeout.google.com/takeout/custom/youtube` and export the subsciption data only. Extract it and save it as `subscriptions.csv` in this folder
 
 You can then run the script
 

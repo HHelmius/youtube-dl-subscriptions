@@ -24,15 +24,17 @@ else:
     content = f.read()
     f.close()
 
-    outline = opml.parse('subs.xml')
 
     ptime = datetime.utcfromtimestamp(float(content))
     ftime = time()
 
     urls = []
 
-    for i in range(0,len(outline[0])):
-        urls.append(outline[0][i].xmlUrl)
+    with open('subscriptions.csv') as f:
+        for row in f.read().splitlines()[1:]:
+            if len(row.strip())==0:
+                continue
+            urls.append(f'https://www.youtube.com/feeds/videos.xml?channel_id={row.split(",")[0]}')
 
     videos = []
     for i in range(0,len(urls)):
