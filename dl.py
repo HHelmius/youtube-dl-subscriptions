@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-import opml
 import feedparser
-import youtube_dl
+import yt_dlp
 import sys
 from glob import glob
 from pprint import pprint
@@ -54,6 +53,6 @@ else:
 
     ydl_opts = {'ignoreerrors': True}
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download(videos)
 
