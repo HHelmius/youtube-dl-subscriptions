@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
-import feedparser
-import yt_dlp
+from time import time, mktime
+from datetime import datetime
 import sys
 from glob import glob
-from pprint import pprint
+import feedparser
+import yt_dlp
+
 PATH='.'
 
 def longer_than_a_minute(info, *, incomplete):
@@ -17,8 +19,6 @@ def longer_than_a_minute(info, *, incomplete):
 if sys.version_info[0] < 3:
     raise Exception('Must be using Python 3')
 
-from time import time, mktime, strptime
-from datetime import datetime
 
 if len(glob('last.txt')) == 0:
     with open('last.txt', 'w') as f:
