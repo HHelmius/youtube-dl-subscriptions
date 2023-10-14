@@ -5,6 +5,7 @@ import yt_dlp
 import sys
 from glob import glob
 from pprint import pprint
+PATH='.'
 
 def longer_than_a_minute(info, *, incomplete):
     """Download only videos longer than a minute (or with unknown duration)"""
@@ -60,6 +61,8 @@ else:
 
     ydl_opts = {
         'match_filter': longer_than_a_minute,
+        'write-thumbnail': True,
+        'outtmpl': f'{PATH}/%(channel)s-%(title)s.%(ext)s',
         'ignoreerrors': True}
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
