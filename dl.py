@@ -6,6 +6,13 @@ import sys
 from glob import glob
 from pprint import pprint
 
+def longer_than_a_minute(info, *, incomplete):
+    """Download only videos longer than a minute (or with unknown duration)"""
+    duration = info.get('duration')
+    if duration and duration < 60:
+        return 'The video is too short'
+
+
 if sys.version_info[0] < 3:
     raise Exception('Must be using Python 3')
 
@@ -51,7 +58,9 @@ else:
     else:
         print(str(len(videos))+' new videos found')
 
-    ydl_opts = {'ignoreerrors': True}
+    ydl_opts = {
+        'match_filter': longer_than_a_minute,
+        'ignoreerrors': True}
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download(videos)
