@@ -2,12 +2,12 @@
 
 from time import time, mktime
 from datetime import datetime
+import argparse
 import sys
 from glob import glob
 import feedparser
 import yt_dlp
 
-PATH='.'
 
 def longer_than_a_minute(info, *, incomplete):
     """Download only videos longer than a minute (or with unknown duration)"""
@@ -16,6 +16,13 @@ def longer_than_a_minute(info, *, incomplete):
         return 'The video is too short'
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d',
+                        '--directory',
+                        default = '.',
+                        help="Specify the directory to save the file")
+    args = parser.parse_args()
+    path = args.directory if args.directory[-1] == '/' else args.directory+'/'
     if sys.version_info[0] < 3:
         raise Exception('Must be using Python 3')
 
@@ -62,7 +69,7 @@ def main():
         ydl_opts = {
             'match_filter': longer_than_a_minute,
             'write-thumbnail': True,
-            'outtmpl': f'{PATH}/%(channel)s-%(title)s.%(ext)s',
+            'outtmpl': f'{path}%(channel)s-%(title)s.%(ext)s',
             'ignoreerrors': True}
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
