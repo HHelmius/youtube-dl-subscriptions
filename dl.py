@@ -50,9 +50,9 @@ def main():
                             f'{row.split(",")[0]}')
 
         videos = []
-        for i in range(0,len(urls)):
+        for i, url in enumerate(urls):
             print('Parsing through channel '+str(i+1)+' out of '+str(len(urls)), end='\r')
-            feed = feedparser.parse(urls[i])
+            feed = feedparser.parse(url)
             for j in range(0,len(feed['items'])):
                 timef = feed['items'][j]['published_parsed']
                 dt = datetime.fromtimestamp(mktime(timef))
