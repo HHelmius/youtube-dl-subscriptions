@@ -46,7 +46,8 @@ def main():
             for row in f.read().splitlines()[1:]:
                 if len(row.strip())==0:
                     continue
-                urls.append(f'https://www.youtube.com/feeds/videos.xml?channel_id={row.split(",")[0]}')
+                urls.append('https://www.youtube.com/feeds/videos.xml?channel_id='
+                            f'{row.split(",")[0]}')
 
         videos = []
         for i in range(0,len(urls)):
