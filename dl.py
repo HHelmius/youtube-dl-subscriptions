@@ -71,6 +71,7 @@ def main():
             'match_filter': longer_than_a_minute,
             'write-thumbnail': True,
             'outtmpl': f'{path}%(channel)s-%(title)s.%(ext)s',
+            'format': 'bestvideo*+bestaudio/best',
             'ignoreerrors': True}
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
