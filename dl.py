@@ -55,8 +55,7 @@ def main():
             feed = feedparser.parse(url)
             for j in range(0,len(feed['items'])):
                 timef = feed['items'][j]['published_parsed']
-                dt = datetime.fromtimestamp(mktime(timef))
-                if dt > ptime:
+                if datetime.fromtimestamp(mktime(timef))> ptime:
                     videos.append(feed['items'][j]['link'])
 
         with open('last.txt', 'w') as f:
