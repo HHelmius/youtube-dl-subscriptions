@@ -1,2 +1,2 @@
 feedparser
-youtube-dl
+yt_dlp
