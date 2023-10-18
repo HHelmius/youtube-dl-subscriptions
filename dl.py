@@ -7,6 +7,7 @@ import sys
 from glob import glob
 import feedparser
 import yt_dlp
+import os
 
 
 def longer_than_a_minute(info, *, incomplete):
@@ -16,6 +17,8 @@ def longer_than_a_minute(info, *, incomplete):
         return 'The video is too short'
 
 def main():
+    path_of_file = str(os.path.dirname(os.path.realpath(__file__)))
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-d',
                         '--directory',
@@ -27,13 +30,13 @@ def main():
         raise Exception('Must be using Python 3')
 
 
-    if len(glob('last.txt')) == 0:
-        with open('last.txt', 'w') as f:
+    if len(glob(f'{path_of_file}/last.txt')) == 0:
+        with open(f'{path_of_file}/last.txt', 'w') as f:
             f.write(str(time()))
             print('Initialized a last.txt file with current timestamp.')
 
     else:
-        with open('last.txt', 'r') as f:
+        with open(f'{path_of_file}/last.txt', 'r') as f:
             content = f.read()
 
 
@@ -42,7 +45,7 @@ def main():
 
         urls = []
 
-        with open('subscriptions.csv') as f:
+        with open(f'{path_of_file}/subscriptions.csv', 'r', encoding='utf8') as f:
             for row in f.read().splitlines()[1:]:
                 if len(row.strip())==0:
                     continue
@@ -58,7 +61,7 @@ def main():
                 if datetime.fromtimestamp(mktime(timef))> ptime:
                     videos.append(feed['items'][j]['link'])
 
-        with open('last.txt', 'w') as f:
+        with open(f'{path_of_file}/last.txt', 'w') as f:
             f.write(str(ftime))
 
         if len(videos) == 0:
