@@ -74,7 +74,8 @@ def main():
             'write-thumbnail': True,
             'outtmpl': f'{path}%(channel)s-%(title)s.%(ext)s',
             'format': 'bestvideo*+bestaudio/best',
-            'ignoreerrors': True}
+            'ignoreerrors': True,
+            'extractor-args': 'youtube:player_client=android,web'}
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download(videos)
