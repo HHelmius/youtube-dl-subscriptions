@@ -5,9 +5,11 @@ from datetime import datetime
 import argparse
 import sys
 from glob import glob
+import os
 import feedparser
 import yt_dlp
-import os
+
+RETRY_TIME = 3600*12 # 12h of reattempts if the video wasn't processed the first time
 
 
 def longer_than_a_minute(info, *, incomplete):
@@ -40,8 +42,7 @@ def main():
             content = f.read()
 
 
-        ptime = datetime.utcfromtimestamp(float(content))
-        ftime = time()
+        previous_time = datetime.utcfromtimestamp(float(content)-RETRY_TIME)
 
         urls = []
 
@@ -58,9 +59,10 @@ def main():
             feed = feedparser.parse(url)
             for j in range(0,len(feed['items'])):
                 timef = feed['items'][j]['published_parsed']
-                if datetime.fromtimestamp(mktime(timef))> ptime:
+                if datetime.fromtimestamp(mktime(timef))> previous_time:
                     videos.append(feed['items'][j]['link'])
 
+        ftime = time()
         with open(f'{path_of_file}/last.txt', 'w') as f:
             f.write(str(ftime))
 
