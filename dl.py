@@ -55,13 +55,13 @@ def main():
                             f'{row.split(",")[0]}')
 
         videos = []
-        min_upload_time_stamp = time()-MIN_UPLOADED_TIME
+        min_upload_time_stamp = datetime.utcfromtimestamp(float(time())-MIN_UPLOADED_TIME)
         for i, url in enumerate(urls):
             print('Parsing through channel '+str(i+1)+' out of '+str(len(urls)), end='\r')
             feed = feedparser.parse(url)
             for j in range(0,len(feed['items'])):
 
-                video_upload_time =datetime.fromtimestamp(
+                video_upload_time = datetime.fromtimestamp(
                                             mktime(feed['items'][j]['published_parsed']))
                 if min_upload_time_stamp > video_upload_time > previous_time:
                     videos.append(feed['items'][j]['link'])
