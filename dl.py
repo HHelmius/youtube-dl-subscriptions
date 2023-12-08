@@ -10,6 +10,7 @@ import feedparser
 import yt_dlp
 
 RETRY_TIME = 3600*12 # 12h of reattempts if the video wasn't processed the first time
+MIN_UPLOADED_TIME = 3600*1 # Minimum time the video has to have been uploaded before attempting
 
 
 def longer_than_a_minute(info, *, incomplete):
@@ -54,12 +55,15 @@ def main():
                             f'{row.split(",")[0]}')
 
         videos = []
+        min_upload_time_stamp = time()-MIN_UPLOADED_TIME
         for i, url in enumerate(urls):
             print('Parsing through channel '+str(i+1)+' out of '+str(len(urls)), end='\r')
             feed = feedparser.parse(url)
             for j in range(0,len(feed['items'])):
-                timef = feed['items'][j]['published_parsed']
-                if datetime.fromtimestamp(mktime(timef))> previous_time:
+
+                video_upload_time =datetime.fromtimestamp(
+                                            mktime(feed['items'][j]['published_parsed']))
+                if min_upload_time_stamp > video_upload_time > previous_time:
                     videos.append(feed['items'][j]['link'])
 
         ftime = time()
