@@ -79,7 +79,7 @@ def main():
             'match_filter': longer_than_a_minute,
             'write-thumbnail': True,
             'outtmpl': f'{path}%(channel)s-%(title)s.%(ext)s',
-            'format': 'bestvideo*+bestaudio/best',
+            'format': 'bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best',
             'ignoreerrors': True,
             'extractor-args': 'youtube:player_client=android,web'}
 
